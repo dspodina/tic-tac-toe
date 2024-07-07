@@ -5,8 +5,12 @@ const restartGame = (gameState, currentPlayer, gameActive) => {
     currentPlayer = 'X';
     gameState.fill('');
     dom.statusDisplay.innerHTML = `It's ${currentPlayer}'s turn`;
-    const cells = document.querySelectorAll('.cell');
-    cells.forEach(cell => cell.innerHTML = '');
+    dom.cells.forEach(cell => {
+        cell.innerHTML = '';
+        cell.style.color = 'black'; 
+    });
+    return { gameState, currentPlayer, gameActive };
 };
 
 export default restartGame;
+

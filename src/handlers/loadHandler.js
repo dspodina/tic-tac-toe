@@ -11,18 +11,28 @@ const loadHandler = () => {
 
     const gameBoard = playBoard();
     const button = resetBtn();
-    dom.container.innerHTML = ''; 
     dom.container.append(gameBoard, button);
 
-    const cells = gameBoard.querySelectorAll('.cell'); 
-    cells.forEach(cell => cell.addEventListener('click', (event) => {
-        const result = handleCellClick(event, gameState, currentPlayer, gameActive);
-        gameActive = result.gameActive;
-        currentPlayer = result.currentPlayer;
-    }));
+    const addCellClickListeners = () => {
+        dom.cells.forEach(cell => cell.addEventListener('click', (event) => {
+            const result = handleCellClick(event, gameState, currentPlayer, gameActive);
+            gameActive = result.gameActive;
+            currentPlayer = result.currentPlayer;
+            if (gameActive) {
+                dom.statusDisplay.innerHTML = `It's ${currentPlayer}'s turn`;
+            }
+        }));
+    };
+
+    addCellClickListeners();
 
     button.addEventListener('click', () => {
-        restartGame(gameState, currentPlayer, gameActive);
+        const restartResult = restartGame(gameState, currentPlayer, gameActive);
+        gameState = restartResult.gameState;
+        currentPlayer = restartResult.currentPlayer;
+        gameActive = restartResult.gameActive;
+        dom.statusDisplay.innerHTML = `It's ${currentPlayer}'s turn`;
+        addCellClickListeners(); 
     });
 
     dom.statusDisplay.innerHTML = `It's ${currentPlayer}'s turn`;
