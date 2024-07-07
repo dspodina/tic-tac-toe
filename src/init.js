@@ -1,5 +1,4 @@
-// import your listeners(events)
+import loadEvent from "./events/loadEvent.js"
 
-import sumListener from './events/sumListener.js';
+loadEvent();
 
-sumListener();
